@@ -1,40 +1,115 @@
 import React from "react";
 import Moment from 'react-moment';
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import { Helmet } from "react-helmet";
 import './App.css';
+import 'tw-elements';
 
 function App() {
   const [githubData, setGithubData] = useState(null);
   const [githubUser, setGithubUser] = useState("EngineerMark");
 
-  async function fetchData(){
+  async function fetchData() {
     await fetch(`https://api.github.com/users/${githubUser}/repos`)
       .then((response) => response.json())
       .then(async (data) => {
-        data.sort((a,b)=>{
-          return ((a.pushed_at<a.updated_at)?
-            (a.pushed_at==b.pushed_at)?0:((a.pushed_at>b.pushed_at?-1:1)):
-            (a.updated_at==b.updated_at)?0:((a.updated_at>b.updated_at?-1:1)));
+        data.sort((a, b) => {
+          return ((a.pushed_at < a.updated_at) ?
+            (a.pushed_at == b.pushed_at) ? 0 : ((a.pushed_at > b.pushed_at ? -1 : 1)) :
+            (a.updated_at == b.updated_at) ? 0 : ((a.updated_at > b.updated_at ? -1 : 1)));
         });
 
-        data = data.slice(0,5);
+        data = data.slice(0, 5);
 
-        for(const repo of data){
-          await fetch(repo.events_url).then((_response)=> _response.json()).then((data)=>{
-            repo.events = data.slice(0,5);
+        for (const repo of data) {
+          await fetch(repo.events_url).then((_response) => _response.json()).then((data) => {
+            repo.events = data.slice(0, 5);
           });
         }
         setGithubData(data);
-        }
+      }
       );
   }
 
   const socials = {
     twitter: "https://twitter.com/id2amayakase",
-    github: "https://github.com/"+githubUser,
+    github: "https://github.com/" + githubUser,
     youtube: "https://www.youtube.com/c/Amayakase",
   };
+
+  const systems = [
+    {
+      id: 0,
+      name: "Personal / Development",
+      os: "Windows 11 Pro",
+      cpu: "AMD Ryzen 5 2600",
+      ram: "16GB DDR4",
+      gpu: "NVIDIA GTX 1050 Ti 8GB",
+      disks: [
+        {
+          name: "KINGSTON SNVS1000GB",
+          capacity: 1024,
+          type: "NVME SSD"
+        },
+        {
+          name: "Samsung SSD 860 QVO",
+          capacity: 1024,
+          type: "SSD"
+        },
+        {
+          name: "Seagate Barracuda Compute",
+          capacity: 4096,
+          type: "HDD"
+        },
+        {
+          name: "Toshiba DT01ACA100",
+          capacity: 1024,
+          type: "HDD"
+        },
+      ]
+    },
+    {
+      id: 1,
+      name: "Server",
+      os: "Ubuntu 22.04 LTS",
+      cpu: "AMD Ryzen 5 3500",
+      ram: "8GB DDR4",
+      gpu: "NVIDIA GTX 1650 4GB",
+      disks: [
+        {
+          name: "SK Hynix",
+          capacity: 256,
+          type: "NVME SSD"
+        },
+        {
+          name: "(RAID0) 3x WD Red Plus 4TB",
+          capacity: 12288,
+          type: "HDD"
+        },
+      ],
+      description: "Runs the following things: Websites, local NAS, Plex and seedbox."
+    },
+    {
+      id: 2,
+      name: "Laptop",
+      os: "Ubuntu 21.10",
+      cpu: "Intel Core i7-7700HQ",
+      ram: "8GB DDR4",
+      gpu: "NVIDIA GTX 1050 4GB",
+      disks: [
+        {
+          name: "Samsung PM961",
+          capacity: 256,
+          type: "NVME SSD"
+        },
+        {
+          name: "HGST HTS721010A9E630",
+          capacity: 1024,
+          type: "HDD"
+        },
+      ]
+    },
+  ];
 
   useEffect(() => {
     fetchData();
@@ -66,21 +141,78 @@ function App() {
               </a>
             </div>
             <div class="text-left">
-              {githubData?<>
+              <p class="text-xl text-white">Systems</p>
+
+              {systems.map(system => (
+                <div>
+                  <a class="mt-4 inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-bs-toggle="collapse" href={"#sys_collaps_" + system.id} role="button" aria-expanded="false" aria-controls={"sys_collaps_" + system.id}>{system.name}</a>
+                  <div class="collapse mt-4" id={"sys_collaps_" + system.id}>
+                    <div class="block p-6 rounded-lg shadow-lg bg-white">
+                      <div class="flex flex-col">
+                        <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                          <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+                            <div class="overflow-hidden">
+                              <table class="min-w-full">
+                                <tbody>
+                                  <tr>
+                                    <td class="px-6 whitespace-nowrap text-sm font-bold text-gray-900 w-8">OS</td>
+                                    <td class="px-6 whitespace-nowrap text-sm font-medium text-gray-900">{system.os}</td>
+                                  </tr>
+                                  <tr>
+                                    <td class="px-6 whitespace-nowrap text-sm font-bold text-gray-900 w-8">CPU</td>
+                                    <td class="px-6 whitespace-nowrap text-sm font-medium text-gray-900">{system.cpu}</td>
+                                  </tr>
+                                  <tr>
+                                    <td class="px-6 whitespace-nowrap text-sm font-bold text-gray-900 w-8">RAM</td>
+                                    <td class="px-6 whitespace-nowrap text-sm font-medium text-gray-900">{system.ram}</td>
+                                  </tr>
+                                  <tr>
+                                    <td class="px-6 whitespace-nowrap text-sm font-bold text-gray-900 w-8">GPU</td>
+                                    <td class="px-6 whitespace-nowrap text-sm font-medium text-gray-900">{system.gpu}</td>
+                                    <td class="px-6 whitespace-nowrap text-sm font-medium text-gray-900">{system.capacity}</td>
+                                  </tr>
+                                  {system.disks.map((disk, i) => (
+                                    <tr>
+                                      <td class="px-6 whitespace-nowrap text-sm font-bold text-gray-900 w-8">Drive {i + 1}</td>
+                                      <td class="px-6 whitespace-nowrap text-sm font-medium text-gray-900">{disk.name}</td>
+                                      <td class="px-6 whitespace-nowrap text-sm font-medium text-gray-900">{niceBytes(disk.capacity, Math.pow(1024,3))}</td>
+                                    </tr>
+                                  ))}
+                                  <tr>
+                                    <td class="px-6 whitespace-nowrap text-sm font-bold text-gray-900 w-8">Capacity</td>
+                                    <td class="px-6 whitespace-nowrap text-sm font-medium text-gray-900">{niceBytes(system.disks.reduce((acc, val) => {
+                                      return acc + val.capacity;
+                                    }, 0), Math.pow(1024,3))}</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                              <p class="mt-4">{system.description}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+
+              <p class="text-xl text-white mt-4">Network</p>
+
+              {githubData ? <>
                 <div class="mt-8">
                   <p class="text-xl text-white">Development Activity</p>
                   <div>
                     {
-                      githubData.map(repo=>(
-                        repo.events&&repo.events.length>0?
+                      githubData.map(repo => (
+                        repo.events && repo.events.length > 0 ?
                           <div class="flex justify-center mt-4 mb-4">
                             <div class="block p-6 rounded-lg shadow-lg bg-white w-full">
                               <h5 class="text-gray-900 text-xl leading-tight font-medium mb-2">{repo.full_name}</h5>
                               <p class="text-gray-700 text-base mb-4">
                                 {
                                   (
-                                    ()=>{
-                                      switch(repo.events[0].type){
+                                    () => {
+                                      switch (repo.events[0].type) {
                                         case "CreateEvent":
                                           return "Created repository";
                                         case "ForkedEvent":
@@ -100,12 +232,12 @@ function App() {
                               </p>
                               <p><Moment fromNow>{repo.events[0].created_at}</Moment></p>
                             </div>
-                          </div>:<></>
+                          </div> : <></>
                       ))
                     }
                   </div>
                 </div>
-              </>:null}
+              </> : null}
             </div>
           </div>
         </div>
@@ -116,25 +248,35 @@ function App() {
 
 export default App;
 
-function GithubPublicEvent(props){
+function GithubPublicEvent(props) {
   return (
     <>Made repository public</>
   )
- }
+}
 
-function GithubPushEvent(props){
+function GithubPushEvent(props) {
   return (
     <>
-      <p>Pushed <a class="text-xs inline-block py-1 px-1 leading-none text-center whitespace-nowrap align-baseline font-bold bg-blue-600 hover:bg-blue-800 text-white rounded" href={"https://github.com/"+props.event.repo.name+"/commit/"+props.event.payload.commits[0].sha} target="_blank" rel="noreferrer">{props.event.payload.commits[0].sha.slice(0,7)}</a> on branch <span class="text-xs inline-block py-1 px-1 leading-none text-center whitespace-nowrap align-baseline font-bold bg-blue-600 hover:bg-blue-800 text-white rounded">{props.event.payload.ref}</span></p>
+      <p>Pushed <a class="text-xs inline-block py-1 px-1 leading-none text-center whitespace-nowrap align-baseline font-bold bg-blue-600 hover:bg-blue-800 text-white rounded" href={"https://github.com/" + props.event.repo.name + "/commit/" + props.event.payload.commits[0].sha} target="_blank" rel="noreferrer">{props.event.payload.commits[0].sha.slice(0, 7)}</a> on branch <span class="text-xs inline-block py-1 px-1 leading-none text-center whitespace-nowrap align-baseline font-bold bg-blue-600 hover:bg-blue-800 text-white rounded">{props.event.payload.ref}</span></p>
       <p class="text-xs">Description: {props.event.payload.commits[0].message}</p>
     </>
   )
 }
 
-function GithubIssuesEvent(props){
+function GithubIssuesEvent(props) {
   return (
-    <>
+    <>dw34esr5cx  
       {props.event.payload.action.charAt(0).toUpperCase() + props.event.payload.action.slice(1)} issue <a class="text-xs inline-block py-1 px-1 leading-none text-center whitespace-nowrap align-baseline font-bold bg-blue-600 hover:bg-blue-800 text-white rounded" href={props.event.payload.issue.html_url} target="_blank" rel="noreferrer">{props.event.payload.issue.title}</a>
     </>
   )
+}
+
+function niceBytes(x, mul = 1) {
+  x = x*mul;
+  const units = ['bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+  let l = 0, n = parseInt(x, 10) || 0;
+  while (n >= 1024 && ++l) {
+    n = n / 1024;
+  }
+  return (n.toFixed(n < 10 && l > 0 ? 1 : 0) + ' ' + units[l]);
 }
