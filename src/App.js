@@ -4,10 +4,11 @@ import { useEffect, useState } from 'react';
 import { Helmet } from "react-helmet";
 import './App.css';
 import 'tw-elements';
+import Icons from './Icons';
 
 function App() {
   const [githubData, setGithubData] = useState(null);
-  const [githubUser, setGithubUser] = useState("EngineerMark");
+  const [githubUser] = useState("EngineerMark");
 
   async function fetchData() {
     await fetch(`https://api.github.com/users/${githubUser}/repos`)
@@ -15,15 +16,15 @@ function App() {
       .then(async (data) => {
         data.sort((a, b) => {
           return ((a.pushed_at < a.updated_at) ?
-            (a.pushed_at == b.pushed_at) ? 0 : ((a.pushed_at > b.pushed_at ? -1 : 1)) :
-            (a.updated_at == b.updated_at) ? 0 : ((a.updated_at > b.updated_at ? -1 : 1)));
+            (a.pushed_at === b.pushed_at) ? 0 : ((a.pushed_at > b.pushed_at ? -1 : 1)) :
+            (a.updated_at === b.updated_at) ? 0 : ((a.updated_at > b.updated_at ? -1 : 1)));
         });
 
         data = data.slice(0, 5);
 
         for (const repo of data) {
-          await fetch(repo.events_url).then((_response) => _response.json()).then((data) => {
-            repo.events = data.slice(0, 5);
+          await fetch(repo.events_url).then((_response) => _response.json()).then((_data) => {
+            repo.events = _data.slice(0, 5);
           });
         }
         setGithubData(data);
@@ -119,14 +120,14 @@ function App() {
     <div>
       <Helmet>
         <meta charSet="utf-8" />
-        <title>DarkChii</title>
+        <title>Dark Chii</title>
       </Helmet>
-      <div class="md:container md:mx-auto mt-4 text-center">
+      <div class="md:container md:mx-auto mt-4 text-center mb-4 text-white">
         <div>
-          <img class="rounded-full shadow-lg mb-6 mx-auto max-w-sm" src="./chii.png" />
+          <img class="rounded-full shadow-lg mb-6 mx-auto max-w-sm" src="./chii.png" alt="Dark Chii" />
         </div>
         <div>
-          <div class="mx-auto max-w-4xl rounded-3xl bg-gray-600 p-20 text-center">
+          <div class="mx-auto max-w-4xl rounded-3xl bg-gray-600 p-10 text-center">
             <h2 class="text-5xl font-bold leading-tight text-white">Dark Chii</h2>
             <p class="mt-5 text-xl leading-8 text-white">Personal repository and general info website</p>
             <div class="mt-6 flex items-center justify-center gap-4">
@@ -141,13 +142,13 @@ function App() {
               </a>
             </div>
             <div class="text-left">
-              <p class="text-xl text-white">Systems</p>
+              <p class="text-xl text-white"><svg class="w-5 h-5 fill-current" style={{display: "inline"}} role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d={Icons.Computer}></path></svg> Systems</p>
 
               {systems.map(system => (
                 <div>
                   <a class="mt-4 inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-bs-toggle="collapse" href={"#sys_collaps_" + system.id} role="button" aria-expanded="false" aria-controls={"sys_collaps_" + system.id}>{system.name}</a>
                   <div class="collapse mt-4" id={"sys_collaps_" + system.id}>
-                    <div class="block p-6 rounded-lg shadow-lg bg-white">
+                    <div class="block p-6 rounded-lg shadow-lg bg-gray-800">
                       <div class="flex flex-col">
                         <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
                           <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
@@ -155,34 +156,34 @@ function App() {
                               <table class="min-w-full">
                                 <tbody>
                                   <tr>
-                                    <td class="px-6 whitespace-nowrap text-sm font-bold text-gray-900 w-8">OS</td>
-                                    <td class="px-6 whitespace-nowrap text-sm font-medium text-gray-900">{system.os}</td>
+                                    <td class="px-6 whitespace-nowrap text-sm font-bold text-gray-200 w-8">OS</td>
+                                    <td class="px-6 whitespace-nowrap text-sm font-medium text-gray-200">{system.os}</td>
                                   </tr>
                                   <tr>
-                                    <td class="px-6 whitespace-nowrap text-sm font-bold text-gray-900 w-8">CPU</td>
-                                    <td class="px-6 whitespace-nowrap text-sm font-medium text-gray-900">{system.cpu}</td>
+                                    <td class="px-6 whitespace-nowrap text-sm font-bold text-gray-200 w-8">CPU</td>
+                                    <td class="px-6 whitespace-nowrap text-sm font-medium text-gray-200">{system.cpu}</td>
                                   </tr>
                                   <tr>
-                                    <td class="px-6 whitespace-nowrap text-sm font-bold text-gray-900 w-8">RAM</td>
-                                    <td class="px-6 whitespace-nowrap text-sm font-medium text-gray-900">{system.ram}</td>
+                                    <td class="px-6 whitespace-nowrap text-sm font-bold text-gray-200 w-8">RAM</td>
+                                    <td class="px-6 whitespace-nowrap text-sm font-medium text-gray-200">{system.ram}</td>
                                   </tr>
                                   <tr>
-                                    <td class="px-6 whitespace-nowrap text-sm font-bold text-gray-900 w-8">GPU</td>
-                                    <td class="px-6 whitespace-nowrap text-sm font-medium text-gray-900">{system.gpu}</td>
-                                    <td class="px-6 whitespace-nowrap text-sm font-medium text-gray-900">{system.capacity}</td>
+                                    <td class="px-6 whitespace-nowrap text-sm font-bold text-gray-200 w-8">GPU</td>
+                                    <td class="px-6 whitespace-nowrap text-sm font-medium text-gray-200">{system.gpu}</td>
+                                    <td class="px-6 whitespace-nowrap text-sm font-medium text-gray-200">{system.capacity}</td>
                                   </tr>
                                   {system.disks.map((disk, i) => (
                                     <tr>
-                                      <td class="px-6 whitespace-nowrap text-sm font-bold text-gray-900 w-8">Drive {i + 1}</td>
-                                      <td class="px-6 whitespace-nowrap text-sm font-medium text-gray-900">{disk.name}</td>
-                                      <td class="px-6 whitespace-nowrap text-sm font-medium text-gray-900">{niceBytes(disk.capacity, Math.pow(1024,3))}</td>
+                                      <td class="px-6 whitespace-nowrap text-sm font-bold text-gray-200 w-8">Drive {i + 1}</td>
+                                      <td class="px-6 whitespace-nowrap text-sm font-medium text-gray-200">{disk.name}</td>
+                                      <td class="px-6 whitespace-nowrap text-sm font-medium text-gray-200">{niceBytes(disk.capacity, Math.pow(1024, 3))}</td>
                                     </tr>
                                   ))}
                                   <tr>
-                                    <td class="px-6 whitespace-nowrap text-sm font-bold text-gray-900 w-8">Capacity</td>
-                                    <td class="px-6 whitespace-nowrap text-sm font-medium text-gray-900">{niceBytes(system.disks.reduce((acc, val) => {
+                                    <td class="px-6 whitespace-nowrap text-sm font-bold text-gray-200 w-8">Capacity</td>
+                                    <td class="px-6 whitespace-nowrap text-sm font-medium text-gray-200">{niceBytes(system.disks.reduce((acc, val) => {
                                       return acc + val.capacity;
-                                    }, 0), Math.pow(1024,3))}</td>
+                                    }, 0), Math.pow(1024, 3))}</td>
                                   </tr>
                                 </tbody>
                               </table>
@@ -196,19 +197,19 @@ function App() {
                 </div>
               ))}
 
-              <p class="text-xl text-white mt-4">Network</p>
+              {/* <p class="text-xl text-white mt-4">Network</p> */}
 
               {githubData ? <>
                 <div class="mt-8">
-                  <p class="text-xl text-white">Development Activity</p>
+                  <p class="text-xl text-white"><svg class="w-5 h-5 fill-current" style={{display: "inline"}} role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d={Icons.Development}></path></svg> Development Activity</p>
                   <div>
                     {
                       githubData.map(repo => (
                         repo.events && repo.events.length > 0 ?
                           <div class="flex justify-center mt-4 mb-4">
-                            <div class="block p-6 rounded-lg shadow-lg bg-white w-full">
-                              <h5 class="text-gray-900 text-xl leading-tight font-medium mb-2">{repo.full_name}</h5>
-                              <p class="text-gray-700 text-base mb-4">
+                            <div class="block p-6 rounded-lg shadow-lg bg-gray-800 w-full">
+                              <h5 class="text-gray-200 text-xl leading-tight font-medium mb-2">{repo.full_name}</h5>
+                              <p class="text-gray-300 text-base mb-4">
                                 {
                                   (
                                     () => {
@@ -239,6 +240,10 @@ function App() {
                 </div>
               </> : null}
             </div>
+            <div class="mt-4 mb-4">
+              © {new Date().getFullYear()} Copyright:
+              <a class="text-gray-800" href={window.location.host}> Dark Chii</a>
+            </div>
           </div>
         </div>
       </div>
@@ -265,14 +270,14 @@ function GithubPushEvent(props) {
 
 function GithubIssuesEvent(props) {
   return (
-    <>dw34esr5cx  
+    <>dw34esr5cx
       {props.event.payload.action.charAt(0).toUpperCase() + props.event.payload.action.slice(1)} issue <a class="text-xs inline-block py-1 px-1 leading-none text-center whitespace-nowrap align-baseline font-bold bg-blue-600 hover:bg-blue-800 text-white rounded" href={props.event.payload.issue.html_url} target="_blank" rel="noreferrer">{props.event.payload.issue.title}</a>
     </>
   )
 }
 
 function niceBytes(x, mul = 1) {
-  x = x*mul;
+  x = x * mul;
   const units = ['bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
   let l = 0, n = parseInt(x, 10) || 0;
   while (n >= 1024 && ++l) {
