@@ -57,7 +57,7 @@ function App() {
                   Info.projects.map((item, index) => {
                     return (
                       <Grid key={index} item xs={6}>
-                        <ChiiButton name={item.name} href={item.url} color={item.color} />
+                        <ChiiButton name={item.name} href={item.url} color={item.color} icon={null} />
                       </Grid>
                     )
                   })

@@ -5,7 +5,7 @@ const Info = {
         { name: 'Location', value: 'Veendam, Groningen, Netherlands' },
         { name: 'Occupation', value: 'Software Engineer' },
         { name: 'Hobbies', value: 'Programming, anime, osu! and city builders' },
-        { name: 'Experience', value: 'C#, JavaScript, React.JS, Lua' },
+        { name: 'Experience', value: 'C#, Unity, JavaScript, React.JS, Lua' },
     ],
     links: [
         {
