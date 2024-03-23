@@ -43,7 +43,7 @@ const Info = {
     projects: [
         {
             name: "osu! scores inspector",
-            url: "https://darkchii.nl/score/",
+            url: "https://score.kirino.sh/",
             color: "#FF66AA"
         },
         {
