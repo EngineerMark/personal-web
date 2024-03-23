@@ -83,6 +83,15 @@ function App() {
                   })
                 }
               </Grid>
+              <Divider sx={{ mt: 1 }} />
+              <Typography variant='h5'>Peak Music</Typography>
+              {
+                Info.music.map((item, index) => {
+                  return (
+                    <><iframe width="100%" height="315" src={`https://www.youtube.com/embed/${item}`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></>
+                  )
+                })
+              }
             </Grid>
             <Grid sx={{ mt: 1, p: 1, borderRadius: borderSize, backgroundColor: '#1b283877' }}>
               <Typography variant='subtitle1'>&copy; 2022 - kirino.sh - <Link href='https://github.com/EngineerMark/personal-web' target='_blank'>source code</Link></Typography>

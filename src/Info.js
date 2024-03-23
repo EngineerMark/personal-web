@@ -1,5 +1,8 @@
 const Info = {
     about: "Hey",
+    music: [
+        'KJ9iiXySXtw'
+    ],
     links: [
         {
             name: "GitHub",
