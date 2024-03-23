@@ -7,10 +7,9 @@ export class ChiiContainer extends Component {
         return (
             <>
                 <Paper sx={{
-                    m: 2,
                     p: 0.5,
                     borderRadius: borderSize,
-                    backgroundImage: 'linear-gradient(to bottom, hsla(328, 100%, 50%, 0.7), rgba(0,0,0,0.7))'
+                    backgroundImage: 'linear-gradient(to bottom, hsla(328, 100%, 50%, 0.3), rgba(0,0,0,0.3))'
                 }}>
                     {this.props.children}
                 </Paper>

@@ -1,12 +1,5 @@
 const Info = {
-    personal: [
-        { name: 'Name', value: 'Mark' },
-        { name: 'Age', value: '22' },
-        { name: 'Location', value: 'Veendam, Groningen, Netherlands' },
-        { name: 'Occupation', value: 'Software Engineer' },
-        { name: 'Hobbies', value: 'Programming, anime, osu! and city builders' },
-        { name: 'Experience', value: 'C#, Unity, JavaScript, React.JS, Lua' },
-    ],
+    about: "Hey",
     links: [
         {
             name: "GitHub",
@@ -51,9 +44,55 @@ const Info = {
             color: "#FF66AA"
         },
         {
-            name: "osu! groningen api",
-            url: "https://github.com/darkchii/groningen-api",
+            name: "open chatter",
+            url: "https://github.com/EngineerMark/open-chatter",
             color: "#FF66AA"
+        }
+    ],
+    systems: [
+        {
+            name: "Gaming PC",
+            cpu: "AMD Ryzen 5 5600G",
+            gpu: "NVIDIA GeForce RTX 3060 12G",
+            ram: "32GB DDR4 2666MHz (2x16GB)",
+            storage: [
+                {
+                    type: "NVME",
+                    size: "1TB",
+                },
+                {
+                    type: "SSD",
+                    size: "1TB",
+                },
+                {
+                    type: "HDD",
+                    size: "4TB",
+                }
+            ]
+        },
+        {
+            name: "Server",
+            cpu: "AMD Ryzen 5 2600",
+            gpu: "NVIDIA GeForce RTX 4070 12G",
+            ram: "16GB DDR4 2666MHz (2x8GB)",
+            storage: [
+                {
+                    type: "NVME",
+                    size: "256GB",
+                },
+                {
+                    type: "HDD",
+                    size: "4TB",
+                },
+                {
+                    type: "HDD",
+                    size: "4TB",
+                },
+                {
+                    type: "HDD",
+                    size: "4TB",
+                }
+            ]
         }
     ]
 }

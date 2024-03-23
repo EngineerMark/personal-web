@@ -5,10 +5,11 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-import { Box, Button, ButtonGroup, Container, CssBaseline, Grid, Link, Paper, SpeedDial, Stack, Typography } from '@mui/material';
+import { Box, Button, ButtonGroup, Container, CssBaseline, Divider, Grid, Link, Paper, SpeedDial, Stack, Typography } from '@mui/material';
 import Theme from './Theme';
 import Info from "./Info";
 import { ChiiButton } from "./ChiiButton";
+import { ChiiContainer } from "./ChiiContainer";
 
 const siteTheme = createTheme(Theme);
 const borderSize = '5px';
@@ -25,33 +26,39 @@ function App() {
             borderRadius: borderSize,
             backgroundImage: 'linear-gradient(to bottom, hsla(328, 100%, 50%, 0.7), rgba(0,0,0,0.7))'
           }}>
-            <Box sx={{ m: 0, p: 0, width: '100%', borderRadius: borderSize }} component="img" src="Headers/Nekopara3.png" />
+            <Box sx={{ m: 0, p: 0, width: '100%', borderRadius: borderSize }} component="img" src="Headers/Header.png" />
             <Grid sx={{ p: 1, borderRadius: borderSize, backgroundColor: '#1b283877' }}>
-              <Grid container>
-                <Grid item xs={8}>
-                  <Typography variant='h5'>About me</Typography>
-                  {
-                    Info.personal.map((item, index) => {
-                      return (
-                        <Typography key={index} variant='subtitle1'>{item.name}: {item.value}</Typography>
-                      )
-                    })
-                  }
-                </Grid>
-                <Grid item xs={4}>
-                  <Typography variant='h5'>Socials</Typography>
-                  <Stack direction='column' spacing={0.3}>
-                    {
-                      Info.links.map((item, index) => {
-                        return (
-                          <ChiiButton key={index} name={item.name} href={item.url} color={item.color} />
-                        )
-                      })
-                    }
-                  </Stack>
-                </Grid>
+              <Typography variant='h5'>Systems</Typography>
+              <Grid container spacing={1}>
+                {
+                  Info.systems.map((item, index) => {
+                    return (
+                      <Grid key={index} item xs={6}>
+                        <ChiiContainer>
+                          <Typography variant='body1'>{item.name}</Typography>
+                          <Typography variant='subtitle2'>CPU: {item.cpu}</Typography>
+                          <Typography variant='subtitle2'>GPU: {item.gpu}</Typography>
+                          <Typography variant='subtitle2'>RAM: {item.ram}</Typography>
+                          <Typography variant='subtitle2'>Storage:</Typography>
+                          <ul>
+                            {
+                              item.storage.map((storage, index) => {
+                                return (
+                                  <li key={index}>
+                                    <Typography variant='subtitle2'>{storage.type}: {storage.size}</Typography>
+                                  </li>
+                                )
+                              })
+                            }
+                          </ul>
+                        </ChiiContainer>
+                      </Grid>
+                    )
+                  })
+                }
               </Grid>
-              <Typography variant='h5'>Some of my projects</Typography>
+              <Divider sx={{ mt: 1 }} />
+              <Typography variant='h5'>Projects</Typography>
               <Grid container spacing={1}>
                 {
                   Info.projects.map((item, index) => {
@@ -63,9 +70,22 @@ function App() {
                   })
                 }
               </Grid>
+              <Divider sx={{ mt: 1 }} />
+              <Typography variant='h5'>Socials</Typography>
+              <Grid container spacing={1}>
+                {
+                  Info.links.map((item, index) => {
+                    return (
+                      <Grid key={index} item xs={6}>
+                        <ChiiButton key={index} name={item.name} href={item.url} color={item.color} />
+                      </Grid>
+                    )
+                  })
+                }
+              </Grid>
             </Grid>
             <Grid sx={{ mt: 1, p: 1, borderRadius: borderSize, backgroundColor: '#1b283877' }}>
-              <Typography variant='subtitle1'>&copy; 2022 - darkchii.nl - <Link href='https://github.com/EngineerMark/personal-web' target='_blank'>source code</Link></Typography>
+              <Typography variant='subtitle1'>&copy; 2022 - kirino.sh - <Link href='https://github.com/EngineerMark/personal-web' target='_blank'>source code</Link></Typography>
             </Grid>
           </Paper>
         </Grid>

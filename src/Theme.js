@@ -6,7 +6,8 @@ const Theme = {
                     height: '100%',
                 },
                 body: {
-                    backgroundImage: 'linear-gradient(#123 60%, #333)',
+                    backgroundImage: 'linear-gradient(#ffc4fb 60%, #ab50a5)',
+                    backgroundAttachment: 'fixed',
                 }
             }
         }
