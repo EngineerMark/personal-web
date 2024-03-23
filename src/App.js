@@ -94,7 +94,7 @@ function App() {
               }
             </Grid>
             <Grid sx={{ mt: 1, p: 1, borderRadius: borderSize, backgroundColor: '#1b283877' }}>
-              <Typography variant='subtitle1'>&copy; 2022 - kirino.sh - <Link href='https://github.com/EngineerMark/personal-web' target='_blank'>source code</Link></Typography>
+              <Typography variant='subtitle1'>&copy; 2022-{(new Date().getFullYear())} - kirino.sh</Typography>
             </Grid>
           </Paper>
         </Grid>
